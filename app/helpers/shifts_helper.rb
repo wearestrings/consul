@@ -21,6 +21,6 @@ module ShiftsHelper
   end
 
   def shift_types(shift)
-    %w(collect_vote recount_scrutiny).map { |type| t("admin.poll_shifts.#{type}") if shift.send(type) }.flatten.join(', ')
+    Poll::Shift::SHIFT_TYPES.map { |type| t("admin.poll_shifts.#{type}") if shift.send(type) }.compact.join(', ')
   end
 end

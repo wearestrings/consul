@@ -1,5 +1,7 @@
 class Poll
   class Shift < ActiveRecord::Base
+    SHIFT_TYPES = %w(collect_vote recount_scrutiny).freeze
+
     belongs_to :booth
     belongs_to :officer
 
@@ -10,7 +12,7 @@ class Poll
     validate :shift_types
 
     def shift_types
-      errors.add(:collect_vote, "At least one Shift Type must be active") unless collect_vote || recount_scrutiny
+      errors.add(:collect_vote, "At least one Shift Type must be active") unless SHIFT_TYPES.any? { |type| send(type) }
     end
 
     before_create :persist_data
