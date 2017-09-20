@@ -505,6 +505,8 @@ FactoryGirl.define do
     association :booth, factory: :poll_booth
     association :officer, factory: :poll_officer
     date Date.current
+    collect_vote true
+    recount_scrutiny false
   end
 
   factory :poll_voter, class: 'Poll::Voter' do

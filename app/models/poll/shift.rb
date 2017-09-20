@@ -7,6 +7,11 @@ class Poll
     validates :officer_id, presence: true
     validates :date, presence: true
     validates :date, uniqueness: { scope: [:officer_id, :booth_id] }
+    validate :shift_types
+
+    def shift_types
+      errors.add(:shift_types, "At least one Shift Type must be active") unless collect_vote || recount_scrutiny
+    end
 
     before_create :persist_data
     after_create :create_officer_assignments
