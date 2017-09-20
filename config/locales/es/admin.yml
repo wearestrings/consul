@@ -502,6 +502,7 @@ es:
         shift: "Asignación"
         shifts: "Turnos en esta urna"
         date: "Fecha"
+        types: "Tipos"
         edit_shifts: Asignar turno
         new_shift: "Nuevo turno"
         no_shifts: "Esta urna no tiene turnos asignados"
@@ -517,6 +518,8 @@ es:
       flash:
         create: "Añadido turno de presidente de mesa"
         destroy: "Eliminado turno de presidente de mesa"
+      collect_vote: Recoger Votos
+      recount_scrutiny: Recuento & Escrutinio
     poll_booth_assignments:
       flash:
         destroy: "Urna desasignada"

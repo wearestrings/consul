@@ -20,4 +20,7 @@ module ShiftsHelper
     officers.collect { |officer| [officer.name, officer.id] }
   end
 
+  def shift_types(shift)
+    %w(collect_vote recount_scrutiny).map { |type| t("admin.poll_shifts.#{type}") if shift.send(type) }.flatten.join(', ')
+  end
 end

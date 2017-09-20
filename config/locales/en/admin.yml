@@ -502,6 +502,7 @@ en:
         shift: "Assignment"
         shifts: "Shifts in this booth"
         date: "Date"
+        types: "Types"
         edit_shifts: Edit shifts
         new_shift: "New shift"
         no_shifts: "This booth has no shifts"
@@ -517,6 +518,8 @@ en:
       flash:
         create: "Shift added"
         destroy: "Shift removed"
+      collect_vote: Collect Votes
+      recount_scrutiny: Recount & Scrutiny
     poll_booth_assignments:
       flash:
         destroy: "Booth not assigned anymore"

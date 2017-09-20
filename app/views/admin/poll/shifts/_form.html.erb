@@ -6,13 +6,13 @@
     	<%= t("admin.poll_shifts.new.new_shift") %>
     </legend>
 
-    <div class="small-12 medium-4 column highlight padding">
+    <div class="small-12 medium-3 column highlight padding">
       <strong><%= t("admin.poll_shifts.new.officer") %></strong>
       <br><%= @officer.name %>
       <%= f.hidden_field :officer_id, value: @officer.id %>
     </div>
 
-    <div class="small-12 medium-4 column">
+    <div class="small-12 medium-3 column">
       <label><%= t("admin.poll_shifts.new.date") %></label>
       <%= f.select :date,
                     shift_dates_select_options(@polls),
@@ -22,7 +22,16 @@
 
     <%= f.hidden_field :booth_id, value: @booth.id %>
 
-    <div class="small-12 medium-4 column">
+
+    <div class="small-12 medium-3 column">
+      <label><%= t("admin.poll_shifts.new.types") %></label>
+      <%#= f.check_box :collect_vote, {}, 'true', 'false' %>
+      <%#= f.check_box :recount_scrutiny, {}, 'true', 'false' %>
+      <%= f.check_box :collect_vote, checked: false, label: t("admin.poll_shifts.collect_vote") %>
+      <%= f.check_box :recount_scrutiny, checked: false, label: t("admin.poll_shifts.recount_scrutiny") %>
+    </div>
+
+    <div class="small-12 medium-3 column">
       <%= f.submit t("admin.poll_shifts.new.add_shift"),
                      class: "button expanded margin-top" %>
     </div>

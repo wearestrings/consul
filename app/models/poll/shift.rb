@@ -10,7 +10,7 @@ class Poll
     validate :shift_types
 
     def shift_types
-      errors.add(:shift_types, "At least one Shift Type must be active") unless collect_vote || recount_scrutiny
+      errors.add(:collect_vote, "At least one Shift Type must be active") unless collect_vote || recount_scrutiny
     end
 
     before_create :persist_data
