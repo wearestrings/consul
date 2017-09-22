@@ -4,6 +4,7 @@ class Poll < ActiveRecord::Base
   has_many :partial_results, through: :booth_assignments
   has_many :white_results, through: :booth_assignments
   has_many :null_results, through: :booth_assignments
+  has_many :total_results, through: :booth_assignments
   has_many :voters
   has_many :officer_assignments, through: :booth_assignments
   has_many :officers, through: :officer_assignments
@@ -33,6 +34,10 @@ class Poll < ActiveRecord::Base
 
   def expired?(timestamp = DateTime.current)
     ends_at < timestamp
+  end
+
+  def self.current_or_incoming
+    current + incoming
   end
 
   def answerable_by?(user)

@@ -25,7 +25,7 @@ module AdminHelper
   end
 
   def menu_polls?
-    ["polls", "questions", "officers", "booths", "officer_assignments", "booth_assignments", "recounts", "results"].include? controller_name
+    ["polls", "questions", "officers", "booths", "officer_assignments", "booth_assignments", "recounts", "results", "shifts"].include? controller_name
   end
 
   def menu_profiles?
@@ -36,6 +36,10 @@ module AdminHelper
     ["banners"].include? controller_name
   end
 
+  def menu_customization?
+    ["pages", "images", "content_blocks"].include? controller_name
+  end
+  
   def official_level_options
     options = [["", 0]]
     (1..5).each do |i|

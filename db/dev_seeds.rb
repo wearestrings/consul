@@ -18,13 +18,13 @@ Setting.create(key: 'comments_body_max_length', value: '1000')
 
 Setting.create(key: 'twitter_handle', value: '@consul_dev')
 Setting.create(key: 'twitter_hashtag', value: '#consul_dev')
-Setting.create(key: 'facebook_handle', value: 'consul')
-Setting.create(key: 'youtube_handle', value: 'consul')
-Setting.create(key: 'telegram_handle', value: 'consul')
-Setting.create(key: 'instagram_handle', value: 'consul')
+Setting.create(key: 'facebook_handle', value: 'CONSUL')
+Setting.create(key: 'youtube_handle', value: 'CONSUL')
+Setting.create(key: 'telegram_handle', value: 'CONSUL')
+Setting.create(key: 'instagram_handle', value: 'CONSUL')
 Setting.create(key: 'blog_url', value: '/blog')
 Setting.create(key: 'url', value: 'http://localhost:3000')
-Setting.create(key: 'org_name', value: 'Consul')
+Setting.create(key: 'org_name', value: 'CONSUL')
 Setting.create(key: 'place_name', value: 'City')
 Setting.create(key: 'feature.debates', value: "true")
 Setting.create(key: 'feature.polls', value: "true")
@@ -36,10 +36,11 @@ Setting.create(key: 'feature.facebook_login', value: "true")
 Setting.create(key: 'feature.google_login', value: "true")
 Setting.create(key: 'feature.signature_sheets', value: "true")
 Setting.create(key: 'feature.legislation', value: "true")
+Setting.create(key: 'feature.community', value: "true")
 Setting.create(key: 'per_page_code_head', value: "")
 Setting.create(key: 'per_page_code_body', value: "")
 Setting.create(key: 'comments_body_max_length', value: '1000')
-Setting.create(key: 'mailer_from_name', value: 'Consul')
+Setting.create(key: 'mailer_from_name', value: 'CONSUL')
 Setting.create(key: 'mailer_from_address', value: 'noreply@consul.dev')
 Setting.create(key: 'meta_description', value: 'Citizen Participation and Open Government Application')
 Setting.create(key: 'meta_keywords', value: 'citizen participation, open government')
@@ -88,6 +89,9 @@ valuator.update(residence_verified_at: Time.current, confirmed_phone: Faker::Pho
 
 poll_officer = create_user('poll_officer@consul.dev', 'Paul O. Fisher')
 poll_officer.create_poll_officer
+poll_officer.update(residence_verified_at: Time.current, confirmed_phone: Faker::PhoneNumber.phone_number, document_type: "1", verified_at: Time.current, document_number: "2211111111")
+
+create_user('unverified@consul.dev', 'unverified')
 
 level_2 = create_user('leveltwo@consul.dev', 'level 2')
 level_2.update(residence_verified_at: Time.current, confirmed_phone: Faker::PhoneNumber.phone_number, document_number: "2222222222", document_type: "1")
@@ -500,7 +504,7 @@ Proposal.last(3).each do |proposal|
 end
 
 puts " ✅"
-puts "Creating proposal notifications"
+print "Creating proposal notifications"
 
 100.times do |i|
   ProposalNotification.create!(title: "Proposal notification title #{i}",
@@ -583,7 +587,7 @@ print "Creating Poll Questions from Proposals"
 3.times do
   proposal = Proposal.reorder("RANDOM()").first
   poll = Poll.current.first
-  question = Poll::Question.create(valid_answers: "Yes, No")
+  question = Poll::Question.create(valid_answers: "Yes, No", poll: poll)
   question.copy_attributes_from_proposal(proposal)
   question.save!
 end
@@ -594,7 +598,7 @@ print "Creating Successful Proposals"
 10.times do
   proposal = Proposal.reorder("RANDOM()").first
   poll = Poll.current.first
-  question = Poll::Question.create(valid_answers: "Yes, No")
+  question = Poll::Question.create(valid_answers: "Yes, No", poll: poll)
   question.copy_attributes_from_proposal(proposal)
   question.save!
 end

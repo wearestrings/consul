@@ -33,7 +33,7 @@ module Abilities
       can :unmark_featured, Debate
 
       can :comment_as_administrator, [Debate, Comment, Proposal, Poll::Question, Budget::Investment,
-                                      Legislation::Question, Legislation::Annotation]
+                                      Legislation::Question, Legislation::Annotation, Topic]
 
       can [:search, :create, :index, :destroy], ::Administrator
       can [:search, :create, :index, :destroy], ::Moderator
@@ -57,7 +57,7 @@ module Abilities
       can [:index, :create, :edit, :update, :destroy], Geozone
 
       can [:read, :create, :update, :destroy, :add_question, :remove_question, :search_booths, :search_questions, :search_officers], Poll
-      can [:read, :create, :update, :destroy], Poll::Booth
+      can [:read, :create, :update, :destroy, :available], Poll::Booth
       can [:search, :create, :index, :destroy], ::Poll::Officer
       can [:create, :destroy], ::Poll::BoothAssignment
       can [:create, :destroy], ::Poll::OfficerAssignment
@@ -73,6 +73,7 @@ module Abilities
       can [:manage], ::Legislation::Question
       cannot :comment_as_moderator, [::Legislation::Question, Legislation::Annotation]
 
+      can [:create, :destroy], Document
     end
   end
 end

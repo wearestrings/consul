@@ -155,7 +155,7 @@ FactoryGirl.define do
     description          'Proposal description'
     question             'Proposal question'
     external_url         'http://external_documention.es'
-    video_url            'http://video_link.com'
+    video_url            'https://youtu.be/nhuNb0XtRhQ'
     responsible_name     'John Snow'
     terms_of_service     '1'
     association :author, factory: :user
@@ -368,6 +368,24 @@ FactoryGirl.define do
     end
   end
 
+  factory :document do
+    sequence(:title) { |n| "Document title #{n}" }
+    association :user, factory: :user
+    attachment { File.new("spec/fixtures/files/empty.pdf") }
+
+    trait :proposal_document do
+      association :documentable, factory: :proposal
+    end
+
+    trait :budget_investment_document do
+      association :documentable, factory: :budget_investment
+    end
+
+    trait :poll_question_document do
+      association :documentable, factory: :poll_question
+    end
+  end
+
   factory :comment do
     association :commentable, factory: :debate
     user
@@ -435,6 +453,11 @@ FactoryGirl.define do
     starts_at { 1.month.ago }
     ends_at { 1.month.from_now }
 
+    trait :current do
+      starts_at { 2.days.ago }
+      ends_at { 2.days.from_now }
+    end
+
     trait :incoming do
       starts_at { 2.days.from_now }
       ends_at { 1.month.from_now }
@@ -478,11 +501,10 @@ FactoryGirl.define do
     end
   end
 
-  factory :poll_final_recount, class: 'Poll::FinalRecount' do
-    association :officer_assignment, factory: [:poll_officer_assignment, :final]
-    association :booth_assignment, factory: :poll_booth_assignment
-    count (1..100).to_a.sample
-    date (1.month.ago.to_datetime..1.month.from_now.to_datetime).to_a.sample
+  factory :poll_shift, class: 'Poll::Shift' do
+    association :booth, factory: :poll_booth
+    association :officer, factory: :poll_officer
+    date Date.current
   end
 
   factory :poll_voter, class: 'Poll::Voter' do
@@ -523,6 +545,11 @@ FactoryGirl.define do
   end
 
   factory :poll_null_result, class: 'Poll::NullResult' do
+    association :author, factory: :user
+    origin { 'web' }
+  end
+
+  factory :poll_total_result, class: 'Poll::TotalResult' do
     association :author, factory: :user
     origin { 'web' }
   end
@@ -770,4 +797,11 @@ LOREM_IPSUM
     locale "en"
     body "Some top links content"
   end
+
+  factory :topic do
+    sequence(:title) { |n| "Topic title #{n}" }
+    sequence(:description) { |n| "Description as comment #{n}" }
+    association :author, factory: :user
+  end
+
 end

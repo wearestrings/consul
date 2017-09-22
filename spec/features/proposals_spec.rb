@@ -89,6 +89,24 @@ feature 'Proposals' do
       expect(current_path).to_not eq(old_path)
       expect(current_path).to eq(right_path)
     end
+
+    scenario 'Can access the community' do
+      Setting['feature.community'] = true
+
+      proposal = create(:proposal)
+      visit proposal_path(proposal)
+      expect(page).to have_content "Access the community"
+
+      Setting['feature.community'] = false
+    end
+
+    scenario 'Can not access the community' do
+      Setting['feature.community'] = false
+
+      proposal = create(:proposal)
+      visit proposal_path(proposal)
+      expect(page).not_to have_content "Access the community"
+    end
   end
 
   context "Embedded video" do
@@ -133,7 +151,7 @@ feature 'Proposals' do
     fill_in 'proposal_summary', with: 'In summary, what we want is...'
     fill_in 'proposal_description', with: 'This is very important because...'
     fill_in 'proposal_external_url', with: 'http://rescue.org/refugees'
-    fill_in 'proposal_video_url', with: 'http://youtube.com'
+    fill_in 'proposal_video_url', with: 'https://www.youtube.com/watch?v=yPQfcG-eimk'
     fill_in 'proposal_responsible_name', with: 'Isabel Garcia'
     fill_in 'proposal_tag_list', with: 'Refugees, Solidarity'
     check 'proposal_terms_of_service'
@@ -151,7 +169,7 @@ feature 'Proposals' do
     expect(page).to have_content 'In summary, what we want is...'
     expect(page).to have_content 'This is very important because...'
     expect(page).to have_content 'http://rescue.org/refugees'
-    expect(page).to have_content 'http://youtube.com'
+    expect(page).to have_content 'https://www.youtube.com/watch?v=yPQfcG-eimk'
     expect(page).to have_content author.name
     expect(page).to have_content 'Refugees'
     expect(page).to have_content 'Solidarity'
@@ -169,7 +187,7 @@ feature 'Proposals' do
     fill_in 'proposal_summary', with: 'In summary, what we want is...'
     fill_in 'proposal_description', with: 'This is very important because...'
     fill_in 'proposal_external_url', with: 'http://rescue.org/refugees'
-    fill_in 'proposal_video_url', with: 'http://youtube.com'
+    fill_in 'proposal_video_url', with: 'https://www.youtube.com/watch?v=yPQfcG-eimk'
     fill_in 'proposal_responsible_name', with: 'Isabel Garcia'
     fill_in 'proposal_tag_list', with: 'Refugees, Solidarity'
     check 'proposal_terms_of_service'
@@ -375,7 +393,7 @@ feature 'Proposals' do
       fill_in 'proposal_summary', with: 'In summary, what we want is...'
       fill_in 'proposal_description', with: 'This is very important because...'
       fill_in 'proposal_external_url', with: 'http://rescue.org/refugees'
-      fill_in 'proposal_video_url', with: 'http://youtube.com'
+      fill_in 'proposal_video_url', with: 'https://www.youtube.com/watch?v=yPQfcG-eimk'
       fill_in 'proposal_responsible_name', with: 'Isabel Garcia'
       check 'proposal_terms_of_service'
 
@@ -403,7 +421,7 @@ feature 'Proposals' do
       fill_in 'proposal_summary', with: 'In summary, what we want is...'
       fill_in 'proposal_description', with: 'This is very important because...'
       fill_in 'proposal_external_url', with: 'http://rescue.org/refugees'
-      fill_in 'proposal_video_url', with: 'http://youtube.com'
+      fill_in 'proposal_video_url', with: 'https://www.youtube.com/watch?v=yPQfcG-eimk'
       fill_in 'proposal_responsible_name', with: 'Isabel Garcia'
       check 'proposal_terms_of_service'
 
@@ -1226,7 +1244,53 @@ feature 'Proposals' do
     expect(Flag.flagged?(user, proposal)).to_not be
   end
 
+  scenario 'Flagging/Unflagging AJAX', :js do
+    user = create(:user)
+    proposal = create(:proposal)
+
+    login_as(user)
+    visit proposal_path(proposal)
+
+    # Flagging
+    within "#proposal_#{proposal.id}" do
+      page.find("#flag-expand-proposal-#{proposal.id}").click
+      page.find("#flag-proposal-#{proposal.id}").click
+
+      expect(page).to have_css("#unflag-expand-proposal-#{proposal.id}")
+    end
+
+    expect(Flag.flagged?(user, proposal)).to be
+
+    # Unflagging
+    within "#proposal_#{proposal.id}" do
+      page.find("#unflag-expand-proposal-#{proposal.id}").click
+      page.find("#unflag-proposal-#{proposal.id}").click
+
+      expect(page).to have_css("#flag-expand-proposal-#{proposal.id}")
+    end
+
+    expect(Flag.flagged?(user, proposal)).to_not be
+  end
+
   it_behaves_like "followable", "proposal", "proposal_path", { "id": "id" }
+
+  it_behaves_like "documentable", "proposal", "proposal_path", { "id": "id" }
+
+  it_behaves_like "nested documentable",
+                  "proposal",
+                  "new_proposal_path",
+                  { },
+                  "fill_new_valid_proposal",
+                  "Create proposal",
+                  "Proposal created successfully"
+
+  it_behaves_like "nested documentable",
+                  "proposal",
+                  "edit_proposal_path",
+                  { "id": "id" },
+                  nil,
+                  "Save changes",
+                  "Proposal updated successfully"
 
   scenario 'Erased author' do
     user = create(:user)
