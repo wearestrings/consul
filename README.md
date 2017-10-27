@@ -1,8 +1,9 @@
-![Logo of CONSUL](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
+![Logo of CONSUL](https://raw.githubusercontent.com/AyuntamientoToledo/consul/master/public/consul_toledo_participa.png)
 
-# CONSUL
+# TOLEDO PARTICIPA - CONSUL
 
-Citizen Participation and Open Government Application
+Citizen Participation and Open Government Application fork in Ciudad de Toledo
+This fork is maintained by [Strings](https://www.wearestrings.com)
 
 [![Build Status](https://travis-ci.org/consul/consul.svg?branch=master)](https://travis-ci.org/consul/consul)
 [![Code Climate](https://codeclimate.com/github/consul/consul/badges/gpa.svg)](https://codeclimate.com/github/consul/consul)
