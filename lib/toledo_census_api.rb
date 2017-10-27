@@ -1,7 +1,15 @@
+require 'rest-client'
+
 include DocumentParser
 
 # REQUIREMENT TOL-2: Custom Census verification model and API integration to use custom Toledo's service
 class ToledoCensusApi < CensusApi
+
+  def initialize
+    super
+    @logger = Logger.new Rails.root.join('log', "census_api.#{Rails.env}.log")
+  end
+
   def call(document_type, document_number)
     response = nil
     get_document_number_variants(document_type, document_number).each do |variant|
@@ -48,11 +56,17 @@ class ToledoCensusApi < CensusApi
   def get_response_body(document_type, document_number)
     if end_point_available?
       begin
-        @parsed_to_json = JSON.parse(rest_client_response(document_number))
+        @logger.info "[#{document_number}] Request: #{rest_get_census_url(document_number)}"
+        response = rest_client_response(document_number)
+        @logger.info "[#{document_number}] 200 Response: #{response}"
+
+        @parsed_to_json = JSON.parse(response)
         @census_response = @parsed_to_json.kind_of?(Array)? @parsed_to_json[0] : @parsed_to_json
+
       rescue Exception => ex
 
-        @census_response = { error: { code: 404, message: ex.message } }
+        @logger.error "[#{document_number}] Response #{ex.http_code}: #{ex.http_body}"
+        @census_response = { error: { code: ex.http_code, message: ex.message } }
       end
       @census_response
     else
@@ -60,14 +74,18 @@ class ToledoCensusApi < CensusApi
     end
   end
 
+  def rest_get_census_url(document_number)
+    "#{Rails.application.secrets.census_api_endpoint}#{document_number}"
+  end
+
   def rest_client_response(document_number)
-    RestClient.get "#{Rails.application.secrets.census_api_endpoint}#{document_number}",
+    RestClient.get rest_get_census_url(document_number),
                    Rails.application.secrets.census_x_key => Rails.application.secrets.census_api_key
 
   end
 
   def end_point_available?
-    Rails.env.staging? || Rails.env.preproduction? || Rails.env.production?
+    Rails.env.staging? || Rails.env.preproduction? || Rails.env.production? || true
   end
 
   def stubbed_response(document_type, document_number)
