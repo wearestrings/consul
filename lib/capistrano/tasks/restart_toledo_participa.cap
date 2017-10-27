@@ -1,0 +1,8 @@
+namespace :deploy do
+  	desc 'Commands for puma Toledo Participa application service'
+	task :restart_toledo_participa_service do
+	  on roles(:app) do
+	    execute :sudo, "service #{fetch(:full_app_name)} restart"
+	  end
+	end
+end
