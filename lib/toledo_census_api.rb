@@ -85,12 +85,12 @@ class ToledoCensusApi < CensusApi
   end
 
   def end_point_available?
-    Rails.env.staging? || Rails.env.preproduction? || Rails.env.production? || true
+    Rails.env.staging? || Rails.env.preproduction? || Rails.env.production?
   end
 
   def stubbed_response(document_type, document_number)
 
-    if document_number == "12345678" && document_type == "1"
+    if document_number == "12345678Z" && document_type == "1"
       stubbed_valid_response
     else
       stubbed_invalid_response

@@ -92,10 +92,20 @@ h6 {
   }
 }
 
-.button.hollow {
+.jumbo.light {
 
-  border-color: lighten($brand, 70%);
-  color: lighten($brand, 70%);
+  .button.hollow {
+
+    border-color: lighten($brand, 70%);
+    color: lighten($brand, 70%);
+  }
+
+  .button.hollow:hover, .button.hollow:focus {
+
+    border-color: $brand;
+    background-color: $brand;
+    color: white;
+  }
 }
 
 .button.hollow:hover, .button.hollow:focus {
