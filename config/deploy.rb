@@ -21,7 +21,7 @@ set :log_level, :info
 set :pty, true
 set :use_sudo, false
 
-set :linked_files, %w{config/database.yml config/secrets.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml config/sms.wsdl config/application_custom.rb}
 set :linked_dirs, %w{log tmp public/system public/assets}
 
 set :keep_releases, 5
@@ -46,7 +46,7 @@ namespace :deploy do
 #  before :starting, 'install_bundler_gem' # install bundler gem
 
   after :publishing, 'deploy:restart_toledo_participa_service'
-  after :published, 'delayed_job:restart'
+  after :publishing, 'deploy:restart_toledo_participa_jobs_queue_service'
   after :published, 'refresh_sitemap'
 
   after :finishing, 'deploy:cleanup'
