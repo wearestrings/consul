@@ -12,6 +12,7 @@ class ToledoCensusApi < CensusApi
 
   def call(document_type, document_number)
     response = nil
+    @logger.info "[#{document_number}] with type #{document_type} | variants => #{get_document_number_variants(document_type, document_number)}"
     get_document_number_variants(document_type, document_number).each do |variant|
       response = Response.new(get_response_body(document_type, variant))
       return response if response.valid?
@@ -25,7 +26,8 @@ class ToledoCensusApi < CensusApi
     end
 
     def valid?
-      @census_response[:error].nil?
+
+      @census_response['error'].nil?
     end
 
     def gender

@@ -1,0 +1,9 @@
+es:
+  pages:
+    more_info:
+      subtitle: "Participar es fácil, descubre todo lo que puedes hacer en esta web."
+      guide: 'Esta guía te explica en sencillos pasos cada una de las secciones de %{org_name}. Puedes ampliar la información en los enlaces de "Información detallada".'
+      debates:
+        feature_1: "Para crear un debate simplemente tienes que %{link}"
+      proposals:
+        feature_1: "Para crear una propuesta tienes que estar %{link}, además para apoyarlas debes verificar tu cuenta."
