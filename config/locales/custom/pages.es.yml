@@ -1,0 +1,11 @@
+es:
+  pages:
+    more_info:
+      title: "Descubre %{org_name}"
+      subtitle: "Participar es fácil, descubre todo lo que puedes hacer en esta web."
+      guide: 'Esta guía te explica en sencillos pasos cada una de las secciones de %{org_name}. Puedes ampliar la información en los enlaces de "Información detallada".'
+      debates:
+        feature_1: "Para crear un debate simplemente tienes que %{link}"
+      proposals:
+        feature_1: "Para crear una propuesta tienes que estar %{link}, además para apoyarlas debes verificar tu cuenta."
+        feature_2_html: "Las propuestas que consigan <strong>el apoyo del 0.5% de la gente</strong> (mayor de 16 años empadronada en Toledo) pasan a votación."
