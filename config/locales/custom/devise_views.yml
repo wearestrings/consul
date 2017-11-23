@@ -1,0 +1,5 @@
+es:
+  devise_views:
+    mailer:
+      confirmation_instructions:
+        title: "Te damos la bienvenida al Portal de #ToledoParticipa"

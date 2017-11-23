@@ -40,6 +40,10 @@ footer {
   }
 }
 
+.progress-bar-nav{
+  background-color: transparent;
+}
+
 .expanded.budget {
 
   background-image: asset_url('custom/budget_info_bg.jpg');
@@ -48,6 +52,7 @@ footer {
   .info {
     background: $budget-darken;
   }
+
 }
 
 .jumbo-budget.budget-heading,
