@@ -4,7 +4,7 @@ es:
       open_city_title: Decide tu ciudad
       open_city_slogan_html: Existen ciudades gobernadas directamente por sus habitantes, en las que la ciudadanía puede <strong>proponer, debatir y decidir</strong> sobre los asuntos que les importan. Con sus ideas contribuyen a mejorar sus vidas y las de los demás. <strong>Toledo ya es una de ellas</strong>.
     footer:
-      consul: 'aplicación CONSUL'
+      consul: 'ToledoParticipa'
       consul_url: 'https://github.com/consul/consul'
       copyright: 'Ayuntamiento de Toledo, %{year}'
       participation_text: 'Tú decides cómo debe ser la ciudad que quieres.'
