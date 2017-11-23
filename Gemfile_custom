@@ -5,4 +5,5 @@
 #
 
 gem 'puma', '~> 3.10.0'
+gem 'therubyracer'
 gem 'rest-client', '2.0.2'

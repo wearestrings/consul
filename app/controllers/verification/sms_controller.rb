@@ -30,9 +30,8 @@ class Verification::SmsController < ApplicationController
       current_user.update(confirmed_phone: current_user.unconfirmed_phone)
       ahoy.track(:level_2_user, user_id: current_user.id) rescue nil
 
-      if VerifiedUser.phone?(current_user)
-        current_user.update(verified_at: Time.current)
-      end
+      # TOL-11-Avoid letter mechanism, scale to level_3 with sms
+      current_user.update(verified_at: Time.current)
 
       redirect_to_next_path
     else
