@@ -77,10 +77,20 @@ module CommonActions
     user ||= create(:user)
 
     login_as(user)
-    commentable_path = commentable.is_a?(Proposal) ? proposal_path(commentable) : debate_path(commentable)
+    commentable_path = if commentable.is_a?(Proposal)
+                         proposal_path(commentable)
+                       elsif commentable.is_a?(Debate)
+                         debate_path(commentable)
+                       elsif commentable.is_a?(Topic)
+                         community_topic_path(commentable, community_id: commentable.community_id)
+                       elsif commentable.is_a?(Poll)
+                         poll_path(commentable)
+                       else
+                         budget_investment_path(commentable, budget_id: commentable.budget_id)
+                       end
     visit commentable_path
 
-    fill_in "comment-body-#{commentable.class.name.underscore}_#{commentable.id}", with: 'Have you thought about...?'
+    fill_in "comment-body-#{commentable.class.name.gsub(/::/, '_').downcase}_#{commentable.id}", with: 'Have you thought about...?'
     click_button 'Publish comment'
 
     expect(page).to have_content 'Have you thought about...?'
@@ -123,7 +133,7 @@ module CommonActions
 
   def error_message(resource_model = nil)
     resource_model ||= "(.*)"
-    /\d errors? prevented this #{resource_model} from being saved:/
+    /\d errors? prevented this #{resource_model} from being saved. Please check the marked fields to know how to correct them:/
   end
 
   def expect_to_be_signed_in
@@ -318,6 +328,33 @@ module CommonActions
     expect(page).to have_content "Vote introduced!"
 
     expect(Poll::Voter.count).to eq(1)
+  end
+
+  def model_name(described_class)
+    return :proposal_notification if described_class == ProposalNotification
+
+    described_class.name.gsub("::", "_").downcase.to_sym
+  end
+
+  def comment_body(resource)
+    "comment-body-#{resource.class.name.parameterize('_').to_sym}_#{resource.id}"
+  end
+
+  def path_for(resource)
+    nested_path_for(resource) || url_for([resource, only_path: true])
+  end
+
+  def nested_path_for(resource)
+    case resource.class.name
+    when "Legislation::Question"
+      legislation_process_question_path(resource.process, resource)
+    when "Legislation::Proposal"
+      legislation_process_proposal_path(resource.process, resource)
+    when "Budget::Investment"
+      budget_investment_path(resource.budget, resource)
+    else
+      false
+    end
   end
 
 end

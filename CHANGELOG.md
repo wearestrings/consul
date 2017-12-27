@@ -4,7 +4,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/consul/consul/compare/v0.10...consul:master)
+## [Unreleased](https://github.com/consul/consul/compare/v0.11...consul:master)
+
+### Added
+- Added Images to Budget Investment's Milestones https://github.com/consul/consul/pull/2186
+- Added Documents to Budget Investment's Milestones https://github.com/consul/consul/pull/2191
+- Added Publication Date Budget Investment's Milestones https://github.com/consul/consul/pull/2188
+- New setting `feature.allow_images` to allow upload and show images for both (proposals and budget investment projects). Set it manually through console with `Setting['feature.allow_images'] = true`
+- Related Content feature. Now Debates & Proposals can be related https://github.com/consul/consul/issues/1164
+- Map validations https://github.com/consul/consul/pull/2207
+- Added spec for 'rake db:dev_seed' taskhttps://github.com/consul/consul/pull/2201
+- Adds timestamps to polls https://github.com/consul/consul/pull/2180 (Run `rake polls:initialize_timestamps` to initialize attributes created_at and updated_at with the current time for all existing polls, or manually through console set correct values)
+
+### Changed
+- Some general Design improvements https://github.com/consul/consul/pull/2170 https://github.com/consul/consul/pull/2198
+- Improved Communities design https://github.com/consul/consul/pull/1904
+- Made Milestones description required & hided title usage https://github.com/consul/consul/pull/2195
+- Improved generic error message https://github.com/consul/consul/pull/2217
+- Improved Sitemap for SEO https://github.com/consul/consul/pull/2215
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Notifications for hidden resources https://github.com/consul/consul/pull/2172
+- Notifications exceptions https://github.com/consul/consul/pull/2187
+- Fixed map location update https://github.com/consul/consul/pull/2213
+
+### Security
+
+## [0.11.0](https://github.com/consul/consul/compare/v0.10...v0.11) - 2017-12-05
 
 ### Added
 - Allow social media image meta tags to be overwritten https://github.com/consul/consul/pull/1756 & https://github.com/consul/consul/pull/2153
@@ -41,6 +71,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added search by name/email on several Admin sections https://github.com/consul/consul/pull/2105
 - Added Docker support https://github.com/consul/consul/pull/2127 & documentation https://consul_docs.gitbooks.io/docs/content/en/getting_started/docker.html
 - Added population restriction validation on Budget Headings https://github.com/consul/consul/pull/2115
+- Added a `/consul.json` route that returns installation details (current release version and feature flags status) for a future dashboard app https://github.com/consul/consul/pull/2164
 
 ### Changed
 - Gem versions locked & cleanup https://github.com/consul/consul/pull/1730

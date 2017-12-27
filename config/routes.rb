@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   get '/welcome', to: 'welcome#welcome'
   get '/cuentasegura', to: 'welcome#verification', as: :cuentasegura
 
+  get '/consul.json', to: "installation#details"
+
   resources :debates do
     member do
       post :vote
@@ -458,6 +460,13 @@ Rails.application.routes.draw do
     resource :residence, controller: "residence", only: [:new, :create]
     resources :voters, only: [:new, :create]
     root to: "dashboard#index"
+  end
+
+  resources :related_contents, only: [:create] do
+    member do
+      put :score_positive
+      put :score_negative
+    end
   end
 
   # GraphQL

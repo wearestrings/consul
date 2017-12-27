@@ -32,6 +32,7 @@ es:
       twitter_login: Registro con Twitter
       facebook_login: Registro con Facebook
       google_login: Registro con Google
+      proposals: Propuestas
       debates: Debates
       polls: Votaciones
       signature_sheets: Hojas de firmas
@@ -43,6 +44,7 @@ es:
         recommendations: Recomendaciones
       community: Comunidad en propuestas y proyectos de inversión
       map: Geolocalización de propuestas y proyectos de inversión
+      allow_images: Permitir subir y mostrar imágenes
     map_latitude: Latitud
     map_longitude: Longitud
     map_zoom: Zoom
