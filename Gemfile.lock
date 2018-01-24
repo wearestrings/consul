@@ -1,3 +1,11 @@
+PATH
+  remote: engines/consul_assemblies
+  specs:
+    consul_assemblies (0.0.1)
+      cancancan
+      kaminari
+      rails (~> 4.2.8)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -508,6 +516,7 @@ DEPENDENCIES
   ckeditor (~> 4.2.3)
   cocoon (~> 1.2.9)
   coffee-rails (~> 4.2.1)
+  consul_assemblies!
   coveralls (~> 0.8.21)
   daemons (~> 1.2.4)
   dalli (~> 2.7.6)

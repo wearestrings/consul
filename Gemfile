@@ -53,6 +53,8 @@ gem 'uglifier', '~> 4.1.2'
 gem 'unicorn', '~> 5.4.0'
 gem 'whenever', '~> 0.10.0', require: false
 
+gem 'consul_assemblies', path: 'engines/consul_assemblies'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-leaflet'
   gem 'rails-assets-markdown-it', '~> 8.2.1'

@@ -52,6 +52,15 @@
                                   title: t("shared.go_to_page") + t("layouts.header.budgets") %>
       </li>
     <% end %>
+    <% if feature?(:assemblies) %>
+      <li>
+        <%= layout_menu_link_to t("layouts.header.assemblies"),
+                                consul_assemblies.assemblies_path,
+                                controller_name == "assemblies" || controller_name == "meetings",
+                                accesskey: "5",
+                                title: t("shared.go_to_page") + t("layouts.header.assemblies") %>
+      </li>
+    <% end %>
     <li>
       <%= link_to t("layouts.header.more_info"),
                     more_info_path,

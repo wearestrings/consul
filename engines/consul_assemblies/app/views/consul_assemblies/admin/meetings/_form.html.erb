@@ -1,0 +1,70 @@
+<%= form_for [:admin, @meeting], html: {class: "edit_meeting", data: {watch_changes: true}} do |f| %>
+
+  <% if @meeting.errors.any? %>
+    <div id="error_explanation" data-alert class="callout alert" data-closable>
+      <button class="close-button" aria-label="<%= t("application.close") %>" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+      <strong>
+        <%= @meeting.errors.count %>
+        <%= t("admin.site_customization.meetings.errors.form.error", count: @meeting.errors.count) %>
+        <!-- <%= @meeting.errors.inspect %> -->
+      </strong>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="small-12 column">
+      <h3><%= t("admin.site_customization.meetings.form.attachments") %></h3>
+      <%= f.fields_for :attachments do |attachment| %>
+          <%= render '/admin/shared/attachment_fields', f: attachment %>
+      <% end %>
+      <br>
+
+      <div class="text-right">
+        <%= link_to_add_association f, :attachments, class: 'button success small'  do %>
+            <%= t("admin.budget_investments.edit.project_attachments_add") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-12 column">
+      <hr>
+
+      <%= f.select :assembly_id, assemblies_select_options(@assemblies) %>
+
+
+      <%= f.select :status, assemblies_statuses_select_options() %>
+
+      <%= f.label :scheduled_at %>
+      <div>
+        <%= datetime_select :meeting, :scheduled_at, {}, {:class => "datetime-select"}  %>
+      </div>
+
+
+      <%= f.label :close_accepting_proposals_at %>
+      <%= datetime_select :meeting, :close_accepting_proposals_at, {}, {:class => "datetime-select"}  %>
+
+
+      <%= f.label :title %>
+      <%= f.text_field :title, label: false, size: 80, maxlength: 80 %>
+      <%= f.label :about_venue %>
+      <%= f.text_field :about_venue, label: false, size: 80, maxlength: 80 %>
+      <%= f.label :summary %>
+      <%= f.text_area :summary, label: false, maxlength: 250 %>
+
+      <div class="ckeditor margin-top">
+        <%= f.label :description %>
+        <%= f.cktext_area :description, label: false, cols: 80, rows: 10, ckeditor: { language: I18n.locale } %>
+      </div>
+
+      <div class="small-12 medium-6 large-4">
+        <%= f.submit class: "button success expanded" %>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

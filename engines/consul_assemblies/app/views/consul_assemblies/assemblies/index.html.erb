@@ -1,0 +1,100 @@
+<% provide :title do %><%= t('assemblies.index.title') %><% end %>
+<% content_for :header_addon do %>
+  <%= render "shared/search_form",
+             search_path: assemblies_path(page: 1),
+             i18n_namespace: "assemblies.index.search_form" %>
+<% end %>
+<% content_for :canonical do %>
+  <%= render "shared/canonical", href: assemblies_url %>
+<% end %>
+
+<main>
+  <% if @search_terms || @advanced_search_terms || @tag_filter || params[:retired].present? %>
+    <div class="highlight no-margin-top padding margin-bottom">
+      <div class="row">
+        <div class="small-12 column">
+          <% if @search_terms || @advanced_search_terms %>
+            <h2><%= t("shared.search_results") %></h2>
+            <p>
+              <%= page_entries_info @assemblies %>
+              <% if !@advanced_search_terms %>
+                <%= t("assemblies.index.search_results_html", count: @assemblies.size, search_term: @search_terms) %>
+              <% end %>
+            <p>
+          <% elsif @tag_filter %>
+            <h2><%= t("shared.search_results") %></h2>
+            <p>
+              <%= page_entries_info @assemblies %>
+              <%= t("assemblies.index.filter_topic", count: @assemblies.size, topic: @tag_filter) %>
+            </p>
+          <% elsif params[:retired].present? %>
+            <h2><%= t("assemblies.index.retired_assemblies") %></h2>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= render "shared/section_header", i18n_namespace: "assemblies.index.section_header", image: "assemblies" %>
+  <% end %>
+
+  <div class="row">
+    <div class="small-12 medium-3 column">
+      <aside class="margin-bottom">
+        <ul class="menu vertical no-margin-top no-padding-top">
+          <% if @assemblies.any? %>
+            <% @assemblies.each do |assembly| %>
+              <li class="<%= 'active' if @assembly == assembly %>">
+                <%= link_to assembly.name, assembly_path(assembly)  %>
+              </li>
+            <% end %>
+            <% else %>
+              <p><%= t("assemblies.index.menu.no_assemblies") %></p>
+            <% end %>
+        </ul>
+      </aside>
+    </div>
+
+    <div id="assemblies" class="assemblies-list small-12 medium-9 column">
+
+      <% if has_banners? %>
+        <%= render "shared/banner" %>
+      <% end %>
+
+<!--      <%= render 'shared/filter_subnav', i18n_namespace: "assemblies.index" %> -->
+
+      <div id="assemblies-list">
+
+        <% if @meetings %>
+          <% if @meetings.any? %>
+            <%= render partial: 'meeting', collection: @meetings %>
+          <% else %>
+            <p>
+              No hay asambleas programadas para <%= @assembly.name %>
+            </p>
+          <% end %>
+        <% else %>
+          <%= t("assemblies.index.empty") %>
+        <% end %>
+
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="small-3 column"></div>
+    <div class="small-9 column">
+      <% unless @search_terms || @advanced_search_terms || @tag_filter %>
+        <div id="section_help" class="margin" data-magellan-target="section_help">
+          <p class="lead">
+            <strong>¿Qué son las asambleas de barrio de Participa Getafe?</strong>
+          </p>
+          <p>Participa Getafe habilita un mecanismo de asambleas para todos los vecinos de Getafe. Desde aquí podrás consultar las próximas asambleas  y enviar puntos del día para incluir en agenda. Además podrás seguir las asambleas y su desarrollo.</p>
+          <p>Para el Ayuntamiento de Getafe las asambleas son fundamentales. Vertebran el desarrollo de los procesos participativos, como los presupuestos.</p>
+          <p><strong>Asistir a una asamblea</strong></p>
+          <p>Puedes asitir a cualquier asamblea que veas aquí anunciada y participar.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>

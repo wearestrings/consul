@@ -8,6 +8,7 @@
         <th scope="col"><%= t("admin.users.columns.email") %></th>
         <th scope="col"><%= t("admin.users.columns.document_number") %></th>
         <th scope="col"><%= t("admin.users.columns.roles") %></th>
+        <th scope="col"><%= t("admin.users.columns.registered_at") %></th>
         <th scope="col"><%= t("admin.users.columns.verification_level") %></th>
       </tr>
     </thead>
@@ -18,6 +19,7 @@
           <td><%= user.email %></td>
           <td><%= user.document_number %></td>
           <td><%= display_user_roles(user) %></td>
+          <td><%= l user.created_at, format: :default %></td>
           <td><%= user.user_type %></td>
         </tr>
       <% end %>

@@ -1,0 +1,55 @@
+<div id="<%= dom_id(meeting) %>" class="legislation clear">
+  <div class="column row legislation-text">
+    <div class="small-12 medium-8 column">
+      <div class="legislation-text">
+        <h3><%= link_to meeting.title, meeting %></h3>
+      </div>
+
+      <p>
+        <%= render 'consul_assemblies/meetings/status', meeting: meeting %>
+      </p>
+
+      <div class="">
+        <%= markdown(meeting.summary.present? ? meeting.summary : first_paragraph(meeting.description)) %>
+      </div>
+
+
+    </div>
+
+    <div class="small-12 medium-4 column">
+
+
+
+      <p class="text-center">
+        <%= link_to 'Suscribirme', url_for(), class: "button hollow expanded" %>
+      </p>
+      <% if meeting.accepting_proposals? %>
+      <p class="text-center">
+        <%= link_to 'Enviar propuesta', url_for(), class: "button success hollow expanded" %>
+      </p>
+      <% end %>
+      <% if meeting.held? %>
+        <%= link_to 'Acta disponible', url_for(), class: "button hollow expanded" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="column row">
+    <div class="small-12 column legislation-calendar-info">
+      <p>Datos clave sobre la celebración de la asamblea</p>
+    </div>
+  </div>
+  <div class="column row small-collapse medium-uncollapse legislation-calendar">
+    <div class="small-6 medium-4 column">
+      <h5>Cuándo</h5>
+      <p><%=l meeting.scheduled_at, format: :short %></p>
+    </div>
+    <div class="small-6 medium-4 column">
+      <h5>Dónde</h5>
+      <p><%= meeting.about_venue %></p>
+    </div>
+    <div class="small-6 medium-4 column">
+      <h5>Cierre orden del día</h5>
+      <p><%= format_date(meeting.close_accepting_proposals_at) %></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<% provide :title do %>
+  Admin - <%= t("admin.menu.site_customization.meetings") %>
+<% end %>
+
+<%= link_to t("admin.assemblies.meetings.index.create"), new_admin_meeting_path, class: "button float-right" %>
+<h2 class="inline-block"><%= t("admin.site_customization.meetings.index.title") %></h2>
+
+<table class="cms_meeting_list">
+  <thead>
+    <tr>
+      <th>Asamblea</th>
+      <th>Asunto</th>
+      <th>Fin propuestas</th>
+      <th>Fecha</th>
+      <th></th>
+      <th colspan="2"><%= t("admin.actions.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @meetings.order_by_scheduled_at.each do |meeting| %>
+    <tr id="<%= dom_id(meeting) %>">
+      <td>
+        <%= meeting.assembly.name %>
+      </td>
+      <td><%= I18n.l meeting.scheduled_at, format: :short %></td>
+      <td><%= I18n.l meeting.close_accepting_proposals_at, format: :short %></td>
+      <td><%= t("admin.site_customization.meetings.meeting.status_#{meeting.status}") %></td>
+      <td>
+        <%= link_to meeting.title, edit_admin_meeting_path(meeting) %>
+      </td>
+      <td class="small">
+        <%= meeting.status  %>
+      </td>
+      <td class="small delete">
+        <span class="icon-x"></span>
+        <%= link_to t("admin.site_customization.meetings.index.delete"), admin_meeting_path(meeting), method: :delete, class: "delete" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @meetings %>

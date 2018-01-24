@@ -1,0 +1,13 @@
+es:
+  assemblies:
+    index:
+      section_header:
+        icon_alt: 'Asambleas de barrio'
+        title: 'Asambleas de barrio'
+
+  admin:
+    menu:
+      assemblies: Asambleas
+  layouts:
+    header:
+      assemblies: Asambleas
